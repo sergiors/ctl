@@ -1,0 +1,30 @@
+{
+    "require": {
+        "docker-php/docker-php": "^1.24",
+        "zendframework/zend-expressive": "^2.1",
+        "xtreamwayz/pimple-container-interop": "^1.0",
+        "vlucas/phpdotenv": "^2.4",
+        "monolog/monolog": "^1.23",
+        "prelude/prelude": "dev-master",
+        "zendframework/zend-expressive-fastroute": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sergiors\\Yard\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sergiors\\Yard\\Tests\\": "test"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@github.com:sergiors/prelude.git"
+        }
+    ],
+    "require-dev": {
+        "filp/whoops": "^2.1"
+    }
+}
