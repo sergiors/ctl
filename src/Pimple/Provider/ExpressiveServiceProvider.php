@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sergiors\Yard\Pimple\Provider;
+namespace Sergiors\Ctl\Pimple\Provider;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;

@@ -6,16 +6,17 @@
         "vlucas/phpdotenv": "^2.4",
         "monolog/monolog": "^1.23",
         "prelude/prelude": "dev-master",
-        "zendframework/zend-expressive-fastroute": "^2.1"
+        "zendframework/zend-expressive-fastroute": "^2.1",
+        "hoa/stream": "1.17.02.21"
     },
     "autoload": {
         "psr-4": {
-            "Sergiors\\Yard\\": "src"
+            "Sergiors\\Ctl\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Sergiors\\Yard\\Tests\\": "test"
+            "Sergiors\\Ctl\\Tests\\": "test"
         }
     },
     "repositories": [

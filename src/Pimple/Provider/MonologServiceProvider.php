@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Sergiors\Yard\Pimple\Provider;
+namespace Sergiors\Ctl\Pimple\Provider;
 
+use Monolog\Formatter\JsonFormatter;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Monolog\Formatter\LineFormatter;
-use Sergiors\Yard\Logger\MonologMiddleware;
+use Sergiors\Ctl\Logger\MonologMiddleware;
 
 final class MonologServiceProvider implements ServiceProviderInterface
 {
@@ -18,21 +18,18 @@ final class MonologServiceProvider implements ServiceProviderInterface
     {
         $container['monolog.name'] = 'app';
         $container['monolog.bubble'] = true;
-        $container['monolog.logfile'] = 'php://stdout';
-
-        $container['monolog.level'] = function () {
-            return Logger::DEBUG;
-        };
 
         $container['monolog.formatter'] = function () {
-            return new LineFormatter;
+            return new JsonFormatter;
         };
 
         $container['monolog.handlers'] = function (Container $container) {
+            $level = self::translateLevel(getenv('LOGLEVEL') ?: Logger::DEBUG);
+
             $handlers = [
                 (new StreamHandler(
-                    $container['monolog.logfile'],
-                    $container['monolog.level']
+                    getenv('LOGFILE') ?: 'php://stdout',
+                    $level
                 ))->setFormatter($container['monolog.formatter'])
             ];
 
@@ -50,5 +47,23 @@ final class MonologServiceProvider implements ServiceProviderInterface
         $container[MonologMiddleware::class] = function (Container $container) {
             return new MonologMiddleware($container[LoggerInterface::class]);
         };
+    }
+
+    public static function translateLevel($name): int
+    {
+        if (is_int($name)) {
+            return $name;
+        }
+
+        $levels = Logger::getLevels();
+        $upper = strtoupper($name);
+
+        if (!isset($levels[$upper])) {
+            throw new \InvalidArgumentException(
+                "Provided logging level '$name' does not exist. Must be a valid monolog logging level."
+            );
+        }
+
+        return $levels[$upper];
     }
 }

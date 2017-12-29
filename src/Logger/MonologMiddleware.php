@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sergiors\Yard\Logger;
+namespace Sergiors\Ctl\Logger;
 
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
@@ -30,13 +30,13 @@ final class MonologMiddleware implements MiddlewareInterface
             function (ResponseInterface $response) use ($request) {
                 $this->logger->addRecord(
                     $this->translateLevel($response->getStatusCode()),
-                    sprintf(
-                        LoggingErrorListener::LOG_FORMAT,
-                        $response->getStatusCode(),
-                        $request->getMethod(),
-                        (string) $request->getUri(),
-                        ''
-                    )
+                    '',
+                    [
+                        'status_code' => $response->getStatusCode(),
+                        'method'      => $request->getMethod(),
+                        'uri'         => (string) $request->getUri(),
+                        'headers'     => $request->getHeaders(),
+                    ]
                 );
 
                 return $response;

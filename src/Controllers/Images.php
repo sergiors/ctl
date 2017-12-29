@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sergiors\Yard\Controllers;
+namespace Sergiors\Ctl\Controllers;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;

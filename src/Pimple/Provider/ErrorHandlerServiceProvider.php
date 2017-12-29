@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sergiors\Yard\Pimple\Provider;
+namespace Sergiors\Ctl\Pimple\Provider;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -14,7 +14,7 @@ use Zend\Expressive\Container\WhoopsErrorResponseGeneratorFactory;
 use Zend\Expressive\Container\WhoopsFactory;
 use Zend\Expressive\Container\WhoopsPageHandlerFactory;
 use Zend\Expressive\Container\ErrorResponseGeneratorFactory;
-use Sergiors\Yard\Logger\LoggingErrorListener;
+use Sergiors\Ctl\Logger\LoggingErrorListener;
 
 final class ErrorHandlerServiceProvider implements ServiceProviderInterface
 {

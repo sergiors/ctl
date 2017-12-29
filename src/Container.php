@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sergiors\Yard;
+namespace Sergiors\Ctl;
 
 abstract class Container extends \Xtreamwayz\Pimple\Container
 {

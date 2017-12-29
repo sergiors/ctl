@@ -2,19 +2,21 @@
 
 use Zend\Expressive\Application;
 use Zend\Stratigility\Middleware\ErrorHandler;
-use Sergiors\Yard\Container;
-use Sergiors\Yard\Pimple\Provider\ExpressiveServiceProvider;
-use Sergiors\Yard\Pimple\Provider\FastRouteServiceProvider;
-use Sergiors\Yard\Pimple\Provider\ErrorHandlerServiceProvider;
-use Sergiors\Yard\Pimple\Provider\MonologServiceProvider;
-use Sergiors\Yard\Pimple\Provider\DockerServiceProvider;
-use Sergiors\Yard\Logger\MonologMiddleware;
-use Sergiors\Yard\ContainerMiddleware;
+use Sergiors\Ctl\Container;
+use Sergiors\Ctl\Pimple\Provider\ExpressiveServiceProvider;
+use Sergiors\Ctl\Pimple\Provider\FastRouteServiceProvider;
+use Sergiors\Ctl\Pimple\Provider\ErrorHandlerServiceProvider;
+use Sergiors\Ctl\Pimple\Provider\MonologServiceProvider;
+use Sergiors\Ctl\Pimple\Provider\DockerServiceProvider;
+use Sergiors\Ctl\Logger\MonologMiddleware;
+use Sergiors\Ctl\ContainerMiddleware;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 $rootDir = dirname(__DIR__);
 $cacheDir = $rootDir . '/cache';
+
+chdir($rootDir);
 
 $container = new class($rootDir, $cacheDir) extends Container {
     public function registerProviders(): array
@@ -28,10 +30,6 @@ $container = new class($rootDir, $cacheDir) extends Container {
         ];
     }
 };
-
-$container['fastroute.cache_enabled'] = getenv('APP_ENV') === 'prod';
-$container['fastroute.cache_file'] = $rootDir . '/cache/fastroute.php';
-$container['monolog.logfile'] = getenv('LOGFILE') ?: 'php://stdout';
 
 $container[ContainerMiddleware::class] = function (Container $container) {
     return new ContainerMiddleware($container);
@@ -47,8 +45,9 @@ $app->pipe(ContainerMiddleware::class);
 $app->pipeRoutingMiddleware();
 $app->pipeDispatchMiddleware();
 
-$app->get('/containers', \Sergiors\Yard\Controllers\Containers::class);
-$app->get('/images', \Sergiors\Yard\Controllers\Images::class);
+$app->get('/containers', \Sergiors\Ctl\Controllers\Containers::class);
+$app->get('/images', \Sergiors\Ctl\Controllers\Images::class);
+$app->get('/errors', \Sergiors\Ctl\Controllers\Errors::class);
 
 $app->run();
 

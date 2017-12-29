@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sergiors\Yard\Logger;
+namespace Sergiors\Ctl\Logger;
 
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -10,8 +10,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class LoggingErrorListener
 {
-    const LOG_FORMAT = '%d [%s] %s';
-
     /**
      * @var LoggerInterface
      */
@@ -28,12 +26,7 @@ final class LoggingErrorListener
         ResponseInterface $response
     ) {
         $this->logger->error(
-            sprintf(
-                self::LOG_FORMAT,
-                $response->getStatusCode(),
-                $request->getMethod(),
-                (string) $request->getUri()
-            ),
+            $error->getMessage(),
             $error->getTrace()
         );
     }

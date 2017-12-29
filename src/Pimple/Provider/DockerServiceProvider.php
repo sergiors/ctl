@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sergiors\Yard\Pimple\Provider;
+namespace Sergiors\Ctl\Pimple\Provider;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -13,13 +13,13 @@ final class DockerServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container)
     {
-        $container['docker.options'] = [
-            'remote_socket' => 'unix:///var/run/docker.sock',
-        ];
-
         $container[Docker::class] = function (Container $container) {
+            $host = getenv('DOCKER_HOST') ?: 'unix:///var/run/docker.sock';
+            
             return new Docker(
-                new Client($container['docker.options'])
+                new Client([
+                    'remote_socket' => $host,
+                ])
             );
         };
     }
