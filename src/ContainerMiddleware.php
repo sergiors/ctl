@@ -21,8 +21,10 @@ final class ContainerMiddleware implements MiddlewareInterface
         $this->container = $container;
     }
 
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
-    {
+    public function process(
+        ServerRequestInterface $request,
+        DelegateInterface $delegate
+    ) {
         return $delegate->process(
             $request->withAttribute(ContainerInterface::class, $this->container)
         );

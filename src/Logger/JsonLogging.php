@@ -6,6 +6,7 @@ namespace Sergiors\Ctl\Logger;
 
 use Hoa\Stream\Context;
 use Hoa\Stream\Stream;
+use Generator, Iterator;
 use const Prelude\{isNull, values};
 use function Prelude\{pipe, map, filter, not};
 
@@ -27,7 +28,7 @@ class JsonLogging extends Stream
 
     public function lines(): array
     {
-        $gets = function ($handle): \Generator {
+        $gets = function ($handle): Generator {
             fseek($handle, -51200, SEEK_END);
 
             while (false  === feof($handle)) {
@@ -35,7 +36,7 @@ class JsonLogging extends Stream
             }
         };
 
-        $lines = function (\Iterator $iterator): array {
+        $lines = function (Iterator $iterator): array {
             $lines = [];
 
             foreach ($iterator as $line) {

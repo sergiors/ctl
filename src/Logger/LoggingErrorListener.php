@@ -7,6 +7,7 @@ namespace Sergiors\Ctl\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 
 final class LoggingErrorListener
 {
@@ -21,7 +22,7 @@ final class LoggingErrorListener
     }
 
     public function __invoke(
-        \Throwable $error,
+        Throwable $error,
         ServerRequestInterface $request,
         ResponseInterface $response
     ) {

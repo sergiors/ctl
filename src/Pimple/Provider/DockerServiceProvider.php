@@ -13,7 +13,7 @@ final class DockerServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container)
     {
-        $container[Docker::class] = function (Container $container) {
+        $container[Docker::class] = function () {
             $host = getenv('DOCKER_HOST') ?: 'unix:///var/run/docker.sock';
             
             return new Docker(

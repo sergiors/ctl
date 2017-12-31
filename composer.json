@@ -5,7 +5,7 @@
         "xtreamwayz/pimple-container-interop": "^1.0",
         "vlucas/phpdotenv": "^2.4",
         "monolog/monolog": "^1.23",
-        "prelude/prelude": "dev-master",
+        "sergiors/prelude": "dev-master",
         "zendframework/zend-expressive-fastroute": "^2.1",
         "hoa/stream": "1.17.02.21"
     },
@@ -19,12 +19,6 @@
             "Sergiors\\Ctl\\Tests\\": "test"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@github.com:sergiors/prelude.git"
-        }
-    ],
     "require-dev": {
         "filp/whoops": "^2.1"
     }

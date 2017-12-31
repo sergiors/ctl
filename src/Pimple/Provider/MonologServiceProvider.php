@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Sergiors\Ctl\Logger\MonologMiddleware;
+use InvalidArgumentException;
 
 final class MonologServiceProvider implements ServiceProviderInterface
 {
@@ -59,7 +60,7 @@ final class MonologServiceProvider implements ServiceProviderInterface
         $upper = strtoupper($name);
 
         if (!isset($levels[$upper])) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "Provided logging level '$name' does not exist. Must be a valid monolog logging level."
             );
         }

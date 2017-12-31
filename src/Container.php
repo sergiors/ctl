@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sergiors\Ctl;
 
+use Dotenv\Dotenv;
+
 abstract class Container extends \Xtreamwayz\Pimple\Container
 {
     public function __construct(string $rootDir, string $cacheDir)
@@ -20,9 +22,7 @@ abstract class Container extends \Xtreamwayz\Pimple\Container
 
     private function initializeDotenv(string $path): void
     {
-        (
-            new \Dotenv\Dotenv($path)
-        )->load();
+        (new Dotenv($path))->load();
     }
 
     private function initializeProviders(): void

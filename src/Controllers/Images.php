@@ -10,6 +10,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\JsonResponse;
 use Docker\Docker;
 use Docker\API\Model\ImageItem;
+use DateTime;
+use DateTimeImmutable;
+use function array_map as map;
 
 final class Images
 {
@@ -24,20 +27,18 @@ final class Images
             ->getImageManager()
             ->findAll();
 
-        return new JsonResponse(
-            array_map(function (ImageItem $image) {
-                $created = (new \DateTimeImmutable)
-                    ->setTimestamp($image->getCreated());
+        return new JsonResponse(map(function (ImageItem $image) {
+            $created = (new DateTimeImmutable)
+                ->setTimestamp($image->getCreated());
 
-                return [
-                    'id'           => $image->getId(),
-                    'tags'         => $image->getRepoTags() ?? [],
-                    'labels'       => $image->getLabels() ?? [],
-                    'size'         => $image->getSize(),
-                    'virtual_size' => $image->getVirtualSize(),
-                    'created'      => $created->format(\DateTime::ATOM),
-                ];
-            }, $images)
-        );
+            return [
+                'id'           => $image->getId(),
+                'tags'         => $image->getRepoTags() ?? [],
+                'labels'       => $image->getLabels() ?? [],
+                'size'         => $image->getSize(),
+                'virtual_size' => $image->getVirtualSize(),
+                'created'      => $created->format(DateTime::ATOM),
+            ];
+        }, $images));
     }
 }
